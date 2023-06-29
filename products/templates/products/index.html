@@ -1,0 +1,404 @@
+{% extends 'products/base.html' %}
+{% load static %}
+
+{% block css %}
+	<link rel="stylesheet" type="text/css" href="{% static 'plugins/slick-1.8.0/slick.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/main_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/responsive.css' %}">
+{% endblock %}
+
+{% block content %}
+	<!-- Banner -->
+
+	<div class="banner">
+		<div class="banner_background" style="background-image:url({% static 'images/banner_background.jpg' %})"></div>
+		<div class="container fill_height">
+			<div class="row fill_height">
+				<div class="banner_product_image"><img src="{% static 'images/banner_product.png' %}" alt="" align="right"></div>
+				<div class="col-lg-5 offset-lg-4 fill_height">
+					<div class="banner_content">
+						<h1 class="banner_text"><font color="black">незаменимая вещь при отдыхе на природе</font></h1>
+						<div class="banner_price"><span>1500</span>1000</div>
+						<div class="banner_product_name">Антипробуксовочная лента</div>
+						<div class="button banner_button"><a href="#">Подробнее</a></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Characteristics -->
+
+	<div class="characteristics">
+		<div class="container">
+			<div class="row">
+
+				<!-- Char. Item -->
+				<div class="col-lg-3 col-md-6 char_col">
+
+					<div class="char_item d-flex flex-row align-items-center justify-content-start">
+						<div class="char_icon"><img src="{% static 'images/char_1.png' %}" alt=""></div>
+						<div class="char_content">
+							<div class="char_title">Бесплатная доставка</div>
+							<div class="char_subtitle">от 1000р</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Char. Item -->
+				<div class="col-lg-3 col-md-6 char_col">
+
+					<div class="char_item d-flex flex-row align-items-center justify-content-start">
+						<div class="char_icon"><img src="{% static 'images/char_2.png' %}" alt=""></div>
+						<div class="char_content">
+							<div class="char_title">Обмен товара</div>
+							<div class="char_subtitle">уточните у менеджера</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Char. Item -->
+				<div class="col-lg-3 col-md-6 char_col">
+
+					<div class="char_item d-flex flex-row align-items-center justify-content-start">
+						<div class="char_icon"><img src="{% static 'images/char_3.png' %}" alt=""></div>
+						<div class="char_content">
+							<div class="char_title">Экономия</div>
+							<div class="char_subtitle">низкие цены</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Char. Item -->
+				<div class="col-lg-3 col-md-6 char_col">
+
+					<div class="char_item d-flex flex-row align-items-center justify-content-start">
+						<div class="char_icon"><img src="{% static 'images/char_4.png' %}" alt=""></div>
+						<div class="char_content">
+							<div class="char_title">Стабильные поставки</div>
+							<div class="char_subtitle">товар в наличии</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Deals of the week -->
+
+
+	<!-- Popular Categories -->
+
+	<div class="popular_categories">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3">
+					<div class="popular_categories_content">
+						<div class="popular_categories_title">Популярные категории</div>
+						<div class="popular_categories_slider_nav">
+							<div class="popular_categories_prev popular_categories_nav"><i class="fas fa-angle-left ml-auto"></i></div>
+							<div class="popular_categories_next popular_categories_nav"><i class="fas fa-angle-right ml-auto"></i></div>
+						</div>
+						<div class="popular_categories_link"><a href="{% url 'products:index' %}">каталог</a></div>
+					</div>
+				</div>
+
+				<!-- Popular Categories Slider -->
+
+				<div class="col-lg-9">
+					<div class="popular_categories_slider_container">
+						<div class="owl-carousel owl-theme popular_categories_slider">
+
+							{% for category in categories %}
+								<div class="owl-item">
+									<div class="popular_category d-flex flex-column align-items-center justify-content-center">
+										<div class="popular_category_image"><img src="/media/{{ category.image }}" alt=""></div>
+										<div class="popular_category_text">{{ category.name }}</div>
+									</div>
+								</div>
+							{% endfor %}
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Banner -->
+
+
+	<!-- Hot New Arrivals -->
+
+	<div class="new_arrivals">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="tabbed_container">
+						<div class="tabs clearfix tabs-right">
+							<div class="new_arrivals_title">Свежие поступления</div>
+							<ul class="clearfix">
+								<li class="active">Уже поступило</li>
+								<li>Ожидается</li>
+								<li>Пользуется спросом</li>
+							</ul>
+							<div class="tabs_line"><span></span></div>
+						</div>
+						<div class="row">
+							<div class="col-lg-9" style="z-index:1;">
+
+								<!-- Product Panel Arrivals -->
+								<div class="product_panel panel active">
+									<div class="arrivals_slider slider">
+										{% for product in news %}
+												<div class="arrivals_slider_item">
+													<div class="border_active"></div>
+													<div class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
+														<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="/media/{{ product.image_main }}" alt=""></div>
+														<div class="product_content">
+															<div class="product_price">{{ product.price }}</div>
+															<div class="product_name"><div><a href="{% url 'products:product' product.id %}">{{ product.name }}</a></div></div>
+															<div class="product_extras">
+																<a href="{% url 'products:basket_add' product.id %}">
+																	<button class="product_cart_button">Добавить в корзину</button>
+																</a>
+															</div>
+														</div>
+													</div>
+												</div>
+										{% endfor %}
+									</div>
+									<div class="arrivals_slider_dots_cover"></div>
+								</div>
+
+								<!-- Product Panel Awaiting -->
+								<div class="product_panel panel">
+									<div class="arrivals_slider slider">
+										{% for product in news %}
+												<div class="arrivals_slider_item">
+													<div class="border_active"></div>
+													<div class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
+														<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="/media/{{ product.image_main }}" alt=""></div>
+														<div class="product_content">
+															<div class="product_price">{{ product.price }}</div>
+															<div class="product_name"><div><a href="product.html">{{ product.name }}</a></div></div>
+															<div class="product_extras">
+																<div class="product_color">
+																	<input type="radio" checked name="product_color" style="background:#b19c83">
+																	<input type="radio" name="product_color" style="background:#000000">
+																	<input type="radio" name="product_color" style="background:#999999">
+																</div>
+																<button class="product_cart_button">Добавить в корзину</button>
+															</div>
+														</div>
+														<div class="product_fav"><i class="fas fa-heart"></i></div>
+														<ul class="product_marks">
+															<li class="product_mark product_discount">-25%</li>
+															<li class="product_mark product_new">new</li>
+														</ul>
+													</div>
+												</div>
+										{% endfor %}
+									</div>
+									<div class="arrivals_slider_dots_cover"></div>
+								</div>
+
+								<!-- Product Panel Popular -->
+								<div class="product_panel panel">
+									<div class="arrivals_slider slider">
+										{% for product in news %}
+												<div class="arrivals_slider_item">
+													<div class="border_active"></div>
+													<div class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
+														<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="/media/{{ product.image_main }}" alt=""></div>
+														<div class="product_content">
+															<div class="product_price">{{ product.price }}</div>
+															<div class="product_name"><div><a href="product.html">{{ product.name }}</a></div></div>
+															<div class="product_extras">
+																<div class="product_color">
+																	<input type="radio" checked name="product_color" style="background:#b19c83">
+																	<input type="radio" name="product_color" style="background:#000000">
+																	<input type="radio" name="product_color" style="background:#999999">
+																</div>
+																<button class="product_cart_button">Добавить в корзину</button>
+															</div>
+														</div>
+														<div class="product_fav"><i class="fas fa-heart"></i></div>
+														<ul class="product_marks">
+															<li class="product_mark product_discount">-25%</li>
+															<li class="product_mark product_new">new</li>
+														</ul>
+													</div>
+												</div>
+										{% endfor %}
+									</div>
+									<div class="arrivals_slider_dots_cover"></div>
+								</div>
+
+							</div>
+
+							{% for product in new %}
+								<div class="col-lg-3">
+									<div class="arrivals_single clearfix">
+										<div class="d-flex flex-column align-items-center justify-content-center">
+											<div class="arrivals_single_image"><img src="/media/{{ product.image_main }}" alt=""></div>
+											<div class="arrivals_single_content">
+												<div class="arrivals_single_category"><a href="#">{{ product.category }}</a></div>
+												<div class="arrivals_single_name_container clearfix">
+													<div class="arrivals_single_name"><a href="#">{{ product.name }}</a></div>
+													<div class="arrivals_single_price text-right">{{ product.price }}</div>
+												</div>
+												<form action="{% url 'products:basket_add' product.id %}"><button class="arrivals_single_button">Добавить в корзину</button></form>
+
+											</div>
+											<ul class="arrivals_single_marks product_marks">
+												<li class="arrivals_single_mark product_mark product_new">new</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							{% endfor %}
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Best Sellers -->
+
+
+	<!-- Adverts -->
+
+
+	<!-- Trends -->
+
+	<!-- Reviews -->
+
+	<div class="reviews">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+
+					<div class="reviews_title_container">
+						<h3 class="reviews_title">Недавние обзоры</h3>
+						<div class="reviews_all ml-auto"><a href="#">смотреть все <span>обзоры</span></a></div>
+					</div>
+
+					<div class="reviews_slider_container">
+
+						<!-- Reviews Slider -->
+						<div class="owl-carousel owl-theme reviews_slider">
+
+							<!-- Reviews Slider Item -->
+							<div class="owl-item">
+								<div class="review d-flex flex-row align-items-start justify-content-start">
+									<div><div class="review_image"><img src="{% static 'images/review_1.jpg' %}" alt=""></div></div>
+									<div class="review_content">
+										<div class="review_name">Roberto Sanchez</div>
+										<div class="review_rating_container">
+											<div class="rating_r rating_r_4 review_rating"><i></i><i></i><i></i><i></i><i></i></div>
+											<div class="review_time">2 day ago</div>
+										</div>
+										<div class="review_text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum laoreet.</p></div>
+									</div>
+								</div>
+							</div>
+
+							<!-- Reviews Slider Item -->
+							<div class="owl-item">
+								<div class="review d-flex flex-row align-items-start justify-content-start">
+									<div><div class="review_image"><img src="{% static 'images/review_2.jpg' %}" alt=""></div></div>
+									<div class="review_content">
+										<div class="review_name">Brandon Flowers</div>
+										<div class="review_rating_container">
+											<div class="rating_r rating_r_4 review_rating"><i></i><i></i><i></i><i></i><i></i></div>
+											<div class="review_time">2 day ago</div>
+										</div>
+										<div class="review_text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum laoreet.</p></div>
+									</div>
+								</div>
+							</div>
+
+							<!-- Reviews Slider Item -->
+							<div class="owl-item">
+								<div class="review d-flex flex-row align-items-start justify-content-start">
+									<div><div class="review_image"><img src="{% static 'images/review_3.jpg' %}" alt=""></div></div>
+									<div class="review_content">
+										<div class="review_name">Emilia Clarke</div>
+										<div class="review_rating_container">
+											<div class="rating_r rating_r_4 review_rating"><i></i><i></i><i></i><i></i><i></i></div>
+											<div class="review_time">2 day ago</div>
+										</div>
+										<div class="review_text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum laoreet.</p></div>
+									</div>
+								</div>
+							</div>
+
+							<!-- Reviews Slider Item -->
+							<div class="owl-item">
+								<div class="review d-flex flex-row align-items-start justify-content-start">
+									<div><div class="review_image"><img src="{% static 'images/review_1.jpg' %}" alt=""></div></div>
+									<div class="review_content">
+										<div class="review_name">Roberto Sanchez</div>
+										<div class="review_rating_container">
+											<div class="rating_r rating_r_4 review_rating"><i></i><i></i><i></i><i></i><i></i></div>
+											<div class="review_time">2 day ago</div>
+										</div>
+										<div class="review_text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum laoreet.</p></div>
+									</div>
+								</div>
+							</div>
+
+							<!-- Reviews Slider Item -->
+							<div class="owl-item">
+								<div class="review d-flex flex-row align-items-start justify-content-start">
+									<div><div class="review_image"><img src="{% static 'images/review_2.jpg' %}" alt=""></div></div>
+									<div class="review_content">
+										<div class="review_name">Brandon Flowers</div>
+										<div class="review_rating_container">
+											<div class="rating_r rating_r_4 review_rating"><i></i><i></i><i></i><i></i><i></i></div>
+											<div class="review_time">2 day ago</div>
+										</div>
+										<div class="review_text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum laoreet.</p></div>
+									</div>
+								</div>
+							</div>
+
+							<!-- Reviews Slider Item -->
+							<div class="owl-item">
+								<div class="review d-flex flex-row align-items-start justify-content-start">
+									<div><div class="review_image"><img src="{% static 'images/review_3.jpg' %}" alt=""></div></div>
+									<div class="review_content">
+										<div class="review_name">Emilia Clarke</div>
+										<div class="review_rating_container">
+											<div class="rating_r rating_r_4 review_rating"><i></i><i></i><i></i><i></i><i></i></div>
+											<div class="review_time">2 day ago</div>
+										</div>
+										<div class="review_text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum laoreet.</p></div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+						<div class="reviews_dots"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<!-- Recently Viewed -->
+
+{% endblock %}
+
+{% block js %}
+	<script src="{% static 'plugins/slick-1.8.0/slick.js' %}"></script>
+	<script src="{% static 'plugins/easing/easing.js' %}"></script>
+	<script src="{% static 'js/custom.js' %}"></script>
+{% endblock %}

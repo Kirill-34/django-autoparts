@@ -1,0 +1,67 @@
+{% extends 'products/base.html' %}
+{% load static %}
+
+{% block css %}
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/product_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/product_responsive.css' %}">
+{% endblock %}
+
+
+{% block content %}
+
+	<!-- Single Product -->
+
+	<div class="single_product">
+		<div class="container">
+			<div class="row">
+
+				<!-- Images -->
+				<div class="col-lg-2 order-lg-1 order-2">
+					<ul class="image_list">
+						<li data-image="images/single_4.jpg"><img src="/media/{{ product.image_1 }}" alt=""></li>
+						<li data-image="images/single_2.jpg"><img src="/media/{{ product.image_2 }}" alt=""></li>
+						<li data-image="images/single_3.jpg"><img src="/media/{{ product.image_3 }}" alt=""></li>
+					</ul>
+				</div>
+
+				<!-- Selected Image -->
+				<div class="col-lg-5 order-lg-2 order-1">
+					<div class="image_selected"><img src="/media/{{ product.image_main }}" alt=""></div>
+				</div>
+
+				<!-- Description -->
+				<div class="col-lg-5 order-3">
+					<div class="product_description">
+						<div class="product_category">{{ product.category }}</div>
+						<div class="product_name">{{ product.name }}</div>
+						<div class="rating_r rating_r_4 product_rating"><i></i><i></i><i></i><i></i><i></i></div>
+						<div class="product_text"><p>{{ product.description }}</p></div>
+						<div class="order_info d-flex flex-row">
+							<form action="#">
+								<div class="clearfix" style="z-index: 1000;">
+
+
+								</div>
+
+								<div class="product_price">{{ product.price }} руб.</div>
+								<div class="button_container">
+									<a href="{% url 'products:basket_add' product.id %}">
+										<button type="button" class="button cart_button">Добавить в корзину</button>
+									</a>
+								</div>
+
+							</form>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+
+{% block js %}
+	<script src="{% static 'plugins/easing/easing.js' %}"></script>
+	<script src="{% static 'js/product_custom.js' %}"></script>
+{% endblock %}
