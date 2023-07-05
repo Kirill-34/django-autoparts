@@ -37,31 +37,11 @@
 								{% endfor %}
 							</ul>
 						</div>
-						<div class="sidebar_section filter_by_section">
-							<div class="sidebar_title">Filter By</div>
-							<div class="sidebar_subtitle">Price</div>
-							<div class="filter_price">
-								<div id="slider-range" class="slider_range"></div>
-								<p>Range: </p>
-								<p><input type="text" id="amount" class="amount" readonly style="border:0; font-weight:bold;"></p>
-							</div>
-						</div>
-						<div class="sidebar_section">
-							<div class="sidebar_subtitle color_subtitle">Color</div>
-							<ul class="colors_list">
-								<li class="color"><a href="#" style="background: #b19c83;"></a></li>
-								<li class="color"><a href="#" style="background: #000000;"></a></li>
-								<li class="color"><a href="#" style="background: #999999;"></a></li>
-								<li class="color"><a href="#" style="background: #0e8ce4;"></a></li>
-								<li class="color"><a href="#" style="background: #df3b3b;"></a></li>
-								<li class="color"><a href="#" style="background: #ffffff; border: solid 1px #e1e1e1;"></a></li>
-							</ul>
-						</div>
 						<div class="sidebar_section">
 							<div class="sidebar_subtitle brands_subtitle">Бренды</div>
 							<ul class="brands_list">
 								{% for brand in brands %}
-									<li class="brand"><a href="#">{{ brand.name }}</a></li>
+									<li class="brand"><a href="{% url 'products:index_brand' brand.id %}">{{ brand.name }}</a></li>
 								{% endfor %}
 							</ul>
 						</div>
@@ -139,6 +119,32 @@
 
 					</div>
 
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Brands -->
+
+	<div class="brands">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="brands_slider_container">
+
+						<!-- Brands Slider -->
+
+						<div class="owl-carousel owl-theme brands_slider">
+							{% for brand in brands %}
+								<div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="/media/{{ brand.image }}" alt=""></div></div>
+							{% endfor %}
+						</div>
+
+						<!-- Brands Slider Navigation -->
+						<div class="brands_nav brands_prev"><i class="fas fa-chevron-left"></i></div>
+						<div class="brands_nav brands_next"><i class="fas fa-chevron-right"></i></div>
+
+					</div>
 				</div>
 			</div>
 		</div>

@@ -8,7 +8,7 @@ from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 
 def index(request):
-    if request.user == auth.models.AnonymousUser:
+    if request.user.is_anonymous:
         total_quantity = 0
         total_sum = 0
     else:
@@ -28,17 +28,22 @@ def index(request):
     }
     return render(request, 'products/index.html', context)
 
-def products(request, category_id=None, page=1):
-    if category_id:
-        products = Product.objects.filter(category__id=category_id)
-        total_items = len(Product.objects.filter(category__id=category_id))
+def products(request, category_id=None, brand_id=None, page=1):
+    if category_id or brand_id:
+        products = Product.objects.filter(category__id=category_id) | Product.objects.filter(brand__id=brand_id)
+        total_items = len(Product.objects.filter(category__id=category_id)) or len(Product.objects.filter(brand__id=brand_id))
     else:
         products = Product.objects.all()
         total_items = len(Product.objects.all())
 
-    baskets = Basket.objects.filter(user=request.user)
-    total_quantity = sum(basket.quantity for basket in baskets)
-    total_sum = sum(basket.sum() for basket in baskets)
+    if request.user.is_anonymous:
+        total_quantity = 0
+        total_sum = 0
+    else:
+        baskets = Basket.objects.filter(user=request.user)
+        total_quantity = sum(basket.quantity for basket in baskets)
+        total_sum = sum(basket.sum() for basket in baskets)
+
     paginator = Paginator(products, 3)
     products_paginator = paginator.page(page)
     context = {
@@ -53,27 +58,15 @@ def products(request, category_id=None, page=1):
 
     return render(request, 'products/products.html', context)
 
-# def products_fil(request, category_id):
-#     baskets = Basket.objects.filter(user=request.user)
-#     total_quantity = sum(basket.quantity for basket in baskets)
-#     total_sum = sum(basket.sum() for basket in baskets)
-#     context = {
-#         'title': 'Автосклад - каталог',
-#         'categories': ProductCategory.objects.all(),
-#         'products': Product.objects.filter(category__id=category_id),
-#         'brands': Brand.objects.all(),
-#         'total_sum': total_sum,
-#         'total_quantity': total_quantity,
-#         'total_items': len(Product.objects.filter(category__id=category_id)),
-#     }
-#
-#     return render(request, 'products/products.html', context)
-
 def product(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
-    baskets = Basket.objects.filter(user=request.user)
-    total_quantity = sum(basket.quantity for basket in baskets)
-    total_sum = sum(basket.sum() for basket in baskets)
+    if request.user.is_anonymous:
+        total_quantity = 0
+        total_sum = 0
+    else:
+        baskets = Basket.objects.filter(user=request.user)
+        total_quantity = sum(basket.quantity for basket in baskets)
+        total_sum = sum(basket.sum() for basket in baskets)
     context = {
         'title': 'Автосклад - товар',
         'product': product,
@@ -153,9 +146,13 @@ def order_delete(request, id):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def contact(request):
-    baskets = Basket.objects.filter(user=request.user)
-    total_quantity = sum(basket.quantity for basket in baskets)
-    total_sum = sum(basket.sum() for basket in baskets)
+    if request.user.is_anonymous:
+        total_quantity = 0
+        total_sum = 0
+    else:
+        baskets = Basket.objects.filter(user=request.user)
+        total_quantity = sum(basket.quantity for basket in baskets)
+        total_sum = sum(basket.sum() for basket in baskets)
     context = {
         'title': 'Автосклад - контакты',
         'categories': ProductCategory.objects.all(),
