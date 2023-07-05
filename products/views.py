@@ -7,6 +7,8 @@ import datetime
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 
+from products.telegramm import send_message
+
 def index(request):
     if request.user.is_anonymous:
         total_quantity = 0
@@ -133,17 +135,25 @@ def search_res(request):
     }
     return render(request, 'products/products.html', context)
 
-def order_add(request, basket_id):
-    basket = Basket.objects.get(id=basket_id)
-    orders = Order.objects.filter(user=request.user, basket=basket)
-    order = orders.first()
-    order.save()
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+def order_add(request):
+    baskets = Basket.objects.filter(user=request.user)
+    res=''
+    for basket in baskets:
+        res += str(basket.product.name) + ' '
+        res += 'артикул ' + str(basket.product.article) + ' '
+        res += str(basket.quantity) + 'шт '
+        res += str(basket.product.price) + 'руб '
+    for basket in baskets:
+        basket.delete()
+
+    text = ('Заказ от ' + str(request.user.first_name) + ' ' + str(request.user.phone_number) + ':\n' + res)
+    send_message(text)
+    return render(request, 'products/products.html')
 
 def order_delete(request, id):
     order = Order.objects.get(id=id)
     order.delete()
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return render(request, 'products/products.html')
 
 def contact(request):
     if request.user.is_anonymous:
