@@ -137,12 +137,14 @@ def search_res(request):
 
 def order_add(request):
     baskets = Basket.objects.filter(user=request.user)
+    total_sum = sum(basket.sum() for basket in baskets)
     res=''
     for basket in baskets:
         res += str(basket.product.name) + ' '
         res += 'артикул ' + str(basket.product.article) + ' '
         res += str(basket.quantity) + 'шт '
         res += str(basket.product.price) + 'руб '
+        res += 'на сумму ' + total_sum
     for basket in baskets:
         basket.delete()
 
