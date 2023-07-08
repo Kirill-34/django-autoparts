@@ -1,12 +1,11 @@
 from django.contrib import admin
 
-from products.models import ProductCategory, Brand, Specification, Product, Basket, Order
+from products.models import ProductCategory, Brand, Specification, Product, Basket
 
 admin.site.register(ProductCategory)
 admin.site.register(Brand)
 admin.site.register(Specification)
 admin.site.register(Basket)
-admin.site.register(Order)
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):

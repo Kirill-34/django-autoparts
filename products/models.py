@@ -58,11 +58,3 @@ class Basket(models.Model):
     def sum(self):
         return self.quantity * self.product.price
 
-class Order(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    basket = models.ForeignKey(Basket, on_delete=models.CASCADE)
-    created_timestamp = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f'Заказ для {self.user.username} | Сумма {self.basket.sum()} руб.'
-

@@ -53,9 +53,10 @@ def profile(request):
                'baskets': baskets,
                'total_quantity': total_quantity,
                'total_sum': total_sum,
+               'categories': ProductCategory.objects.all(),
     }
     return render(request, 'users/profile.html', context)
 
 def logout(request):
-    request.user = auth.models.AnonymousUser
+    auth.logout(request)
     return render(request, 'products/index.html')

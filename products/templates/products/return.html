@@ -1,0 +1,43 @@
+{% extends 'products/base.html' %}
+{% load static %}
+
+{% block css %}
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/regular_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'styles/regular_responsive.css' %}">
+{% endblock %}
+
+{% block content %}
+
+	<!-- Single Blog Post -->
+
+	<div class="single_post">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2">
+					<div class="single_post_title">Возврат и обмен товара</div>
+					<div class="single_post_text">
+						<p>Возврат автомобильных запчастей, как и любых потребительских товаров, регулируется федеральным законом.
+							Потребитель имеет право в двухнедельный срок обратиться в точку продажи с требованием обмена или сдачи запчасти надлежащего качества в магазин. При этом запчасть не должна быть использована в эксплуатации, должна иметь первоначальный вид, упаковку, заводскую этикетку и чек.
+							Исключение составляет категория технически сложных товаров, к таким относятся электрические и электромеханические запчасти, которые нельзя вернуть или обменять в случае их хорошего качества.
+						</p>
+
+						<div class="single_post_quote text-center">
+							<div class="quote_image"><img src="{% static 'images/quote.png' %}" alt=""></div>
+							<div class="quote_text">Потребитель имеет право в двухнедельный срок обратиться в точку продажи с требованием обмена или сдачи запчасти надлежащего качества в магазин.</div>
+							<div class="quote_name">статья 25 закона № 2300-1</div>
+						</div>
+
+						<p>Для обмена или возврата запчасти потребителю необходимо обратиться к менеджеру, и составить заявление. В случае возникновения спорных вопросов может понадобиться проведение экспертизы, после чего выносится решение по требованию заявителя. </p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block js %}
+	<script src="{% static 'plugins/easing/easing.js' %}"></script>
+	<script src="{% static 'js/regular_custom.js' %}"></script>
+{% endblock %}
+

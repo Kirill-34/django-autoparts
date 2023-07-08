@@ -1,8 +1,8 @@
 from django.shortcuts import render, HttpResponseRedirect, get_object_or_404
 
-from django.contrib import auth
+from django.contrib import messages
 
-from products.models import ProductCategory, Brand, Specification, Product, Basket, Order
+from products.models import ProductCategory, Brand, Specification, Product, Basket
 import datetime
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
@@ -31,9 +31,12 @@ def index(request):
     return render(request, 'products/index.html', context)
 
 def products(request, category_id=None, brand_id=None, page=1):
-    if category_id or brand_id:
-        products = Product.objects.filter(category__id=category_id) | Product.objects.filter(brand__id=brand_id)
-        total_items = len(Product.objects.filter(category__id=category_id)) or len(Product.objects.filter(brand__id=brand_id))
+    if category_id:
+        products = Product.objects.filter(category__id=category_id)
+        total_items = len(Product.objects.filter(category__id=category_id))
+    elif brand_id:
+        products = Product.objects.filter(brand__id=brand_id)
+        total_items = len(Product.objects.filter(brand__id=brand_id))
     else:
         products = Product.objects.all()
         total_items = len(Product.objects.all())
@@ -46,7 +49,7 @@ def products(request, category_id=None, brand_id=None, page=1):
         total_quantity = sum(basket.quantity for basket in baskets)
         total_sum = sum(basket.sum() for basket in baskets)
 
-    paginator = Paginator(products, 3)
+    paginator = Paginator(products, 15)
     products_paginator = paginator.page(page)
     context = {
         'title': 'Автосклад - каталог',
@@ -118,7 +121,7 @@ def basket_item_dec(request, product_id):
 
 def search_res(request):
     query = request.GET.get('search_string')
-    products = Product.objects.filter(name__iregex=query) | Product.objects.filter(description__iregex=query)
+    products = Product.objects.filter(name__iregex=query) | Product.objects.filter(description__iregex=query) | Product.objects.filter(article__iregex=query)
 
     baskets = Basket.objects.filter(user=request.user)
     total_quantity = sum(basket.quantity for basket in baskets)
@@ -134,6 +137,28 @@ def search_res(request):
         'total_items': len(products),
     }
     return render(request, 'products/products.html', context)
+
+def question(request):
+    query = request.GET.get('search_string')
+    if query:
+        text=str(query)
+    else:
+        text=''
+    send_message('Запрос от ' + str(request.user.first_name) + ' ' + str(request.user.phone_number) + ': ' + text)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+def order_question(request):
+    send_message('Запрос о статусе заказа от ' + str(request.user.first_name) + ' ' + str(request.user.phone_number))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+def contact_question(request):
+    name = request.GET.get('first_name')
+    email = request.GET.get('email')
+    phone_number = request.GET.get('phone_number')
+    message = request.GET.get('message')
+    send_message('Быстрый запрос от ' + str(name) + ' ' + str(email) + ' ' + str(phone_number) + ': ' + str(message))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
 
 def order_add(request):
     baskets = Basket.objects.filter(user=request.user)
@@ -152,10 +177,53 @@ def order_add(request):
     send_message(text)
     return render(request, 'products/products.html')
 
-def order_delete(request, id):
-    order = Order.objects.get(id=id)
-    order.delete()
-    return render(request, 'products/products.html')
+def return_good(request):
+    if request.user.is_anonymous:
+        total_quantity = 0
+        total_sum = 0
+    else:
+        baskets = Basket.objects.filter(user=request.user)
+        total_quantity = sum(basket.quantity for basket in baskets)
+        total_sum = sum(basket.sum() for basket in baskets)
+    context = {
+        'title': 'Автосклад - возврат и обмен',
+        'categories': ProductCategory.objects.all(),
+        'total_sum': total_sum,
+        'total_quantity': total_quantity,
+    }
+    return render(request, 'products/return.html', context)
+
+def about_order(request):
+    if request.user.is_anonymous:
+        total_quantity = 0
+        total_sum = 0
+    else:
+        baskets = Basket.objects.filter(user=request.user)
+        total_quantity = sum(basket.quantity for basket in baskets)
+        total_sum = sum(basket.sum() for basket in baskets)
+    context = {
+        'title': 'Автосклад - статус заказа',
+        'categories': ProductCategory.objects.all(),
+        'total_sum': total_sum,
+        'total_quantity': total_quantity,
+    }
+    return render(request, 'products/about_order.html', context)
+
+def faq(request):
+    if request.user.is_anonymous:
+        total_quantity = 0
+        total_sum = 0
+    else:
+        baskets = Basket.objects.filter(user=request.user)
+        total_quantity = sum(basket.quantity for basket in baskets)
+        total_sum = sum(basket.sum() for basket in baskets)
+    context = {
+        'title': 'Автосклад - частые вопросы',
+        'categories': ProductCategory.objects.all(),
+        'total_sum': total_sum,
+        'total_quantity': total_quantity,
+    }
+    return render(request, 'products/FAQ.html', context)
 
 def contact(request):
     if request.user.is_anonymous:

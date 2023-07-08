@@ -37,20 +37,10 @@
 							<div class="top_bar_menu">
 								<ul class="standard_dropdown top_bar_dropdown">
 									<li>
-										<a href="#">Русский<i class="fas fa-chevron-down"></i></a>
-										<ul>
-											<li><a href="#">English</a></li>
-											<li><a href="#">Spanish</a></li>
-											<li><a href="#">Japanese</a></li>
-										</ul>
+										<a>Русский<i class="fas fa-chevron-down"></i></a>
 									</li>
 									<li>
-										<a href="#">Рубль РФ<i class="fas fa-chevron-down"></i></a>
-										<ul>
-											<li><a href="#">US dollar</a></li>
-											<li><a href="#">EUR Euro</a></li>
-											<li><a href="#">JPY Japanese Yen</a></li>
-										</ul>
+										<a>Рубль РФ<i class="fas fa-chevron-down"></i></a>
 									</li>
 								</ul>
 							</div>
@@ -78,24 +68,30 @@
 								<li class="page_menu_item has-children">
 									<a href="#">Язык<i class="fa fa-angle-down"></i></a>
 									<ul class="page_menu_selection">
-										<li><a href="#">Русский<i class="fa fa-angle-down"></i></a></li>
-										<li><a href="#">English<i class="fa fa-angle-down"></i></a></li>
-										<li><a href="#">Spanish<i class="fa fa-angle-down"></i></a></li>
-										<li><a href="#">Japanese<i class="fa fa-angle-down"></i></a></li>
+										<li>
+											<a>Русский<i class="fas fa-chevron-down"></i></a>
+										</li>
 									</ul>
 								</li>
 								<li class="page_menu_item has-children">
 									<a href="#">Валюта<i class="fa fa-angle-down"></i></a>
 									<ul class="page_menu_selection">
-										<li><a href="#">Рубль РФ<i class="fa fa-angle-down"></i></a></li>
-										<li><a href="#">US Dollar<i class="fa fa-angle-down"></i></a></li>
-										<li><a href="#">EUR Euro<i class="fa fa-angle-down"></i></a></li>
-										<li><a href="#">JPY Japanese Yen<i class="fa fa-angle-down"></i></a></li>
+										<li>
+											<a>Рубль РФ<i class="fas fa-chevron-down"></i></a>
+										</li>
 									</ul>
 								</li>
-								<li class="page_menu_item"><a href="#">Домашняя<i class="fa fa-angle-down"></i></a></li>
-								<li class="page_menu_item"><a href="blog.html">Новости<i class="fa fa-angle-down"></i></a></li>
-								<li class="page_menu_item"><a href="contact.html">Контакты<i class="fa fa-angle-down"></i></a></li>
+								<li><a href="{% url 'index' %}">Домашняя<i class="fas fa-chevron-down"></i></a></li>
+								<li><a href="{% url 'products:index' %}">Каталог<i class="fas fa-chevron-down"></i></a></li>
+								<li class="hassubs">
+									<a href="#">Покупателям<i class="fas fa-chevron-down"></i></a>
+									<ul>
+										<li><a href="{% url 'products:about_order' %}">Уточнение о статусе заказа<i class="fas fa-chevron-down"></i></a></li>
+										<li><a href="{% url 'products:return' %}">Возврат и обмен<i class="fas fa-chevron-down"></i></a></li>
+										<li><a href="{% url 'products:faq' %}">Частые вопросы<i class="fas fa-chevron-down"></i></a></li>
+									</ul>
+								</li>
+								<li><a href="{% url 'products:contact' %}">Контакты<i class="fas fa-chevron-down"></i></a></li>
 							</ul>
 
 							<div class="menu_contact">
@@ -121,21 +117,12 @@
 				<div class="col-lg-3 footer_col">
 					<div class="footer_column footer_contact">
 						<div class="logo_container">
-							<div class="logo"><a href="#">Oilery</a></div>
+							<div class="logo"><a href="{% url 'index' %}">Autoparts</a></div>
 						</div>
 						<div class="footer_title">Остались вопросы? Звоните 24/7</div>
 						<div class="footer_phone">+7 904 403 6359</div>
 						<div class="footer_contact_text">
 							<p>РФ, Волгоград</p>
-						</div>
-						<div class="footer_social">
-							<ul>
-								<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-								<li><a href="#"><i class="fab fa-twitter"></i></a></li>
-								<li><a href="#"><i class="fab fa-youtube"></i></a></li>
-								<li><a href="#"><i class="fab fa-google"></i></a></li>
-								<li><a href="#"><i class="fab fa-vimeo-v"></i></a></li>
-							</ul>
 						</div>
 					</div>
 				</div>
@@ -144,13 +131,9 @@
 					<div class="footer_column">
 						<div class="footer_title">Быстрый поиск</div>
 						<ul class="footer_list">
-							<li><a href="#">Автозапчасти</a></li>
-							<li><a href="#">Автомасла</a></li>
-							<li><a href="#">Фильтры</a></li>
-							<li><a href="#">Аксессуары</a></li>
-							<li><a href="#">Инструменты</a></li>
-							<li><a href="#">Смазки</a></li>
-							<li><a href="#">Тормозная жидкость</a></li>
+							{% for category in categories %}
+								<li><a href="{% url 'products:index_cat' category.id %}">{{ category.name }}</a></li>
+							{% endfor %}
 						</ul>
 					</div>
 				</div>
@@ -158,8 +141,7 @@
 				<div class="col-lg-2">
 					<div class="footer_column">
 						<ul class="footer_list footer_list_2">
-							<li><a href="#">Новинки</a></li>
-							<li><a href="#">Популярное</a></li>
+							<li><a href="{% url 'products:index' %}">Каталог</a></li>
 						</ul>
 					</div>
 				</div>
@@ -168,12 +150,15 @@
 					<div class="footer_column">
 						<div class="footer_title">Для покупателей</div>
 						<ul class="footer_list">
-							<li><a href="#">Мой аккаунт</a></li>
-							<li><a href="#">Отслеживание заказа</a></li>
-							<li><a href="#">Желаемое</a></li>
-							<li><a href="#">Возврат, обмен</a></li>
-							<li><a href="#">Частые вопросы</a></li>
-							<li><a href="#">Поддержка</a></li>
+							{% if request.user.is_authenticated %}
+								<li><a href="{% url 'users:profile' %}">Мой аккаунт</a></li>
+								<li><a href="{% url 'products:order_question' %}">Уточнить о заказе</a></li>
+							{% else %}
+								<li><a href="{% url 'users:login' %}">Мой аккаунт</a></li>
+								<li><a href="{% url 'users:login' %}">Уточнить о заказе</a></li>
+							{% endif %}
+							<li><a href="{% url 'products:return' %}">Возврат, обмен</a></li>
+							<li><a href="{% url 'products:faq' %}">Частые вопросы</a></li>
 						</ul>
 					</div>
 				</div>
