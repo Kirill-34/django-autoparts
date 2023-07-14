@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
 from products.models import Brand, Basket, ProductCategory, Product
 
+import datetime
+
 def login(request):
     if request.method == 'POST':
         form = UserLoginForm(data=request.POST)
@@ -59,4 +61,9 @@ def profile(request):
 
 def logout(request):
     auth.logout(request)
-    return render(request, 'products/index.html')
+    context = {'categories': ProductCategory.objects.all(),
+               'news': (Product.objects.filter(
+                   created_date__gte=(datetime.date.today() - datetime.timedelta(days=7))) & Product.objects.filter(
+                   created_date__lte=(datetime.date.today()))),
+               }
+    return render(request, 'products/index.html', context)

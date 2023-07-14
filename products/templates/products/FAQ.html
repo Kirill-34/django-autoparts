@@ -1,47 +1,103 @@
 {% extends 'products/base.html' %}
 {% load static %}
 
-{% block css %}
-	<link rel="stylesheet" type="text/css" href="{% static 'styles/regular_styles.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'styles/regular_responsive.css' %}">
-{% endblock %}
-
 {% block content %}
 
-	<!-- Single Blog Post -->
+    <!--== Start Page Header Area ==-->
+    <div class="page-header-wrap bg-img" data-bg="{% static 'img/1616690104_38-p-avtozapchasti-fon-43.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="page-header-content">
+                        <div class="page-header-content-inner">
+                            <h1>Частые вопросы</h1>
 
-	<div class="single_post">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-8 offset-lg-2">
-					<div class="single_post_title">Сроки выполнения заказа</div>
-					<div class="single_post_text">
-						<p>В случае заказа товара в наличии на складе срок доставки составляет до 24 часов с момента заказа.
-							Доставка товара "под заказ" согласовывается в индивидуальном порядке
-						</p>
-					</div>
-					<div class="single_post_title">Оплата заказа</div>
-					<div class="single_post_text">
-						<p>Оплата заказа товара в наличии производится в момент получения товара.
-							Расчитаться момжно как наличными так и онлайн переводом.
-							Оплата товара "под заказ" производится по частичной предоплате в индивидуальном порядке.
-						</p>
-					</div>
-					<div class="single_post_title">Доставка</div>
-					<div class="single_post_text">
-						<p>Бесплатная доставка товара осуществляется в черте города Волгоград при заказе товара на сумму от 1000 руб.
-							Доставка товара в пункт за чертой города согласовывается с менеджером в индивидуальном порядке.
-						</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                            <ul class="breadcrumb">
+                                <li><a href="{% url 'index' %}">Домашняя</a></li>
+                                <li class="current"><a href="#">Частые вопросы</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--== End Page Header Area ==-->
+
+    <!--== Start Page Content Wrapper ==-->
+    <div class="page-content-wrapper sp-y">
+        <div class="blog-details-page-wrapper">
+            <div class="container container-wide">
+                <div class="row">
+                    <div class="col-12">
+                        <article class="blog-post-details">
+
+                            <div class="blog-post-txt-wrap">
+                                <div class="row">
+
+                                    <div class="col-md-9 col-lg-8 m-auto order-0">
+                                        <div class="blog-post-txt">
+                                            <h2>Сроки выполнения заказа</h2>
+
+                                            <p>В случае заказа товара в наличии на складе срок доставки составляет до 24
+                                                часов с момента заказа. <br>
+                                                Доставка товара "под заказ" согласовывается в индивидуальном порядке.</p>
+
+                                            <h2>Оплата заказа</h2>
+
+                                            <p>Оплата заказа товара в наличии производится в момент получения товара.
+                                                Расчитаться можно как наличными так и онлайн переводом. <br>
+                                                Оплата товара "под заказ" производится по частичной предоплате в индивидуальном
+                                                порядке.</p>
+
+                                            <h2>Доставка</h2>
+
+                                            <p>Бесплатная доставка товара осуществляется в черте города Волгоград при заказе
+                                                товара на сумму от 1000 руб. <br>
+                                                Доставка товара в пункт за чертой города согласовывается с менеджером в
+                                                индивидуальном порядке.</p>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="newsletter-area-wrapper">
+        <div class="container container-wide">
+                <div class="row">
+                    <div class="col-lg-8 col-xl-5 m-auto">
+                        <div class="newsletter-content text-center">
+                            <h4> <span>Нет Вашего вопроса?</span> </h4>
+
+                                <div class="newsletter-form-wrap">
+                                    {% if request.user.is_authenticated %}
+                                        <form action="{% url 'products:question' %}" method="get">
+                                            <div class="form-content">
+                                                <input name="search_string" type="text" placeholder="Напишите нам и мы ответим" />
+                                                <button class="btn-newsletter">Запросить</button>
+                                            </div>
+                                        </form>
+                                    {% else %}
+                                        <form action="{% url 'users:login' %}" method="get">
+                                            <div class="form-content">
+                                                <input name="search_string" type="text" placeholder="Напишите нам и мы ответим" />
+                                                <button class="btn-newsletter">Запросить</button>
+                                            </div>
+                                        </form>
+                                    {% endif %}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+    </div>
+    <!--== End Page Content Wrapper ==-->
 
 {% endblock %}
-
-{% block js %}
-	<script src="{% static 'plugins/easing/easing.js' %}"></script>
-	<script src="{% static 'js/regular_custom.js' %}"></script>
-{% endblock %}
-

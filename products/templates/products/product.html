@@ -1,93 +1,141 @@
 {% extends 'products/base.html' %}
 {% load static %}
 
-{% block css %}
-	<link rel="stylesheet" type="text/css" href="{% static 'styles/product_styles.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'styles/product_responsive.css' %}">
-{% endblock %}
-
-
 {% block content %}
 
-	<!-- Single Product -->
+    <!--== Start Page Header Area ==-->
+    <div class="page-header-wrap bg-img" data-bg="{% static 'img/1616690104_38-p-avtozapchasti-fon-43.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="page-header-content">
+                        <div class="page-header-content-inner">
+                            <h1>Подробнее о товаре</h1>
 
-	<div class="single_product">
-		<div class="container">
-			<div class="row">
+                            <ul class="breadcrumb">
+                                <li><a href="{% url 'index' %}">Домашняя</a></li>
+                                <li><a href="{% url 'products:index' %}">Каталог</a></li>
+                                <li class="current"><a href="#">Товар</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--== End Page Header Area ==-->
 
-				<!-- Images -->
-				<div class="col-lg-2 order-lg-1 order-2">
-					<ul class="image_list">
-						<li data-image="images/single_4.jpg"><img src="/media/{{ product.image_1 }}" alt=""></li>
-						<li data-image="images/single_2.jpg"><img src="/media/{{ product.image_2 }}" alt=""></li>
-						<li data-image="images/single_3.jpg"><img src="/media/{{ product.image_3 }}" alt=""></li>
-					</ul>
-				</div>
+    <!--== Start Page Content Wrapper ==-->
+    <div class="page-content-wrapper sp-y">
+        <div class="product-details-page-content">
+            <div class="container container-wide">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row">
+                            <!-- Start Product Thumbnail Area -->
+                            <div class="col-md-5">
+                                <div class="product-thumb-area">
+                                    <div class="product-details-thumbnail">
+                                        <div class="product-thumbnail-slider" id="thumb-gallery">
+                                            <figure class="pro-thumb-item" data-mfp-src="/media/{{ product.image_main }}">
+                                                <img src="/media/{{ product.image_main }}" alt="Product Details" />
+                                            </figure>
+                                            {% if product.image_1 %}
+                                                <figure class="pro-thumb-item" data-mfp-src="/media/{{ product.image_1 }}">
+                                                    <img src="/media/{{ product.image_1 }}" alt="Product Details" />
+                                                </figure>
+                                            {% endif %}
+                                            {% if product.image_2 %}
+                                                <figure class="pro-thumb-item" data-mfp-src="/media/{{ product.image_2 }}">
+                                                    <img src="/media/{{ product.image_2 }}" alt="Product Details" />
+                                                </figure>
+                                            {% endif %}
+                                            {% if product.image_3 %}
+                                                <figure class="pro-thumb-item" data-mfp-src="/media/{{ product.image_3 }}">
+                                                    <img src="/media/{{ product.image_3 }}" alt="Product Details" />
+                                                </figure>
+                                            {% endif %}
+                                        </div>
 
-				<!-- Selected Image -->
-				<div class="col-lg-5 order-lg-2 order-1">
-					<div class="image_selected"><img src="/media/{{ product.image_main }}" alt=""></div>
-				</div>
+                                        <a href="#thumb-gallery" class="btn-large-view btn-gallery-popup">Увеличить <i class="fa fa-search-plus"></i></a>
+                                    </div>
 
-				<!-- Description -->
-				<div class="col-lg-5 order-3">
-					<div class="product_description">
-						<div class="product_category">{{ product.category }}</div>
-						<div class="product_name">{{ product.name }}</div>
-						<div class="rating_r rating_r_4 product_rating"><i></i><i></i><i></i><i></i><i></i></div>
-						<div class="product_text"><p>{{ product.description }}</p></div>
-						<div class="order_info d-flex flex-row">
-							<form action="#">
-								<div class="clearfix" style="z-index: 1000;">
+                                    <div class="product-details-thumbnail-nav">
+                                        <figure class="pro-thumb-item">
+                                            <img src="/media/{{ product.image_main }}" alt="Product Details" />
+                                        </figure>
+                                        {% if product.image_1 %}
+                                            <figure class="pro-thumb-item">
+                                                <img src="/media/{{ product.image_1 }}" alt="Product Details" />
+                                            </figure>
+                                        {% endif %}
+                                        {% if product.image_2 %}
+                                            <figure class="pro-thumb-item">
+                                                <img src="/media/{{ product.image_2 }}" alt="Product Details" />
+                                            </figure>
+                                        {% endif %}
+                                        {% if product.image_3 %}
+                                            <figure class="pro-thumb-item">
+                                                <img src="/media/{{ product.image_3 }}" alt="Product Details" />
+                                            </figure>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Product Thumbnail Area -->
+
+                            <!-- Start Product Info Area -->
+                            <div class="col-md-7">
+                                <div class="product-details-info-content-wrap">
+                                    <div class="prod-details-info-content">
+                                        <h2>{{ product.name }}</h2>
+                                        <h5 class="price"><strong>Цена:</strong> <span class="price-amount">{{ product.price }} руб.</span>
+                                        </h5>
+                                        <p>{{ product.description }}</p>
+
+                                        <div class="product-config">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered">
+
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                        <div class="product-action">
+                                            <div class="action-top d-sm-flex">
+
+                                                <button class="btn btn-bordered"><a href="{% url 'products:basket_add' product.id %}">Добавить в корзину</a></button>
+                                            </div>
+                                        </div>
+
+                                        <div class="product-meta">
+
+                                            <span class="posted_in">Артикул:
+                                            <a href="{% url 'products:index_cat' product.category.id %}">{{ product.article }}</a>
+                                        </span>
+
+                                            <span class="posted_in">Категория:
+                                            <a href="{% url 'products:index_cat' product.category.id %}">{{ product.category }}</a>
+                                        </span>
+
+                                            {% if product.brand %}
+                                            <span class="tagged_as">Бренд:
+                                            <a href="{% url 'products:index_brand' product.brand.id %}">{{ product.brand }}</a>
+                                        </span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Product Info Area -->
+                        </div>
 
 
-								</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--== End Page Content Wrapper ==-->
 
-								<div class="product_price">{{ product.price }} руб.</div>
-								<div class="button_container">
-									<a href="{% url 'products:basket_add' product.id %}">
-										<button type="button" class="button cart_button">Добавить в корзину</button>
-									</a>
-								</div>
-
-							</form>
-						</div>
-					</div>
-				</div>
-
-			</div>
-		</div>
-	</div>
-
-	<!-- Brands -->
-
-	<div class="brands">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="brands_slider_container">
-
-						<!-- Brands Slider -->
-
-						<div class="owl-carousel owl-theme brands_slider">
-							{% for brand in brands %}
-								<div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="/media/{{ brand.image }}" alt=""></div></div>
-							{% endfor %}
-						</div>
-
-						<!-- Brands Slider Navigation -->
-						<div class="brands_nav brands_prev"><i class="fas fa-chevron-left"></i></div>
-						<div class="brands_nav brands_next"><i class="fas fa-chevron-right"></i></div>
-
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-{% endblock %}
-
-
-{% block js %}
-	<script src="{% static 'plugins/easing/easing.js' %}"></script>
-	<script src="{% static 'js/product_custom.js' %}"></script>
 {% endblock %}

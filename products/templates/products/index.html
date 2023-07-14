@@ -1,313 +1,244 @@
 {% extends 'products/base.html' %}
 {% load static %}
 
-{% block css %}
-	<link rel="stylesheet" type="text/css" href="{% static 'plugins/slick-1.8.0/slick.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'styles/main_styles.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'styles/responsive.css' %}">
-{% endblock %}
-
 {% block content %}
-	<!-- Banner -->
 
-	<div class="banner">
-		<div class="banner_background" style="background-image:url({% static 'images/fon.jpg' %})"></div>
-		<div class="container fill_height">
-			<div class="row fill_height">
-				<div class="banner_product_image"><img src="{% static 'images/banner_product.png' %}" alt="" align="right"></div>
-				<div class="col-lg-5 offset-lg-4 fill_height">
-					<div class="banner_content">
-						<h1 class="banner_text"><font color="black">незаменимая вещь при отдыхе на природе</font></h1>
-						<div class="banner_price"><span>1500</span>1000</div>
-						<div class="banner_product_name">Антипробуксовочная лента</div>
-						<div class="button banner_button"><a href="#">Подробнее</a></div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <!--== Start Slider Area Wrapper ==-->
+    <div class="slider-area-wrapper">
+        <div class="slider-content-active">
+            <div class="slider-slide-item bg-img" data-bg="{% static 'img/slider/slider-1_1624_1024.png' %}">
+                <div class="container container-wide h-100">
+                    <div class="row align-items-center h-100">
+                        <div class="col-lg-6">
+                            <div class="slide-content">
+                                <div class="slide-content-inner">
+                                    <h3>БОЛЬШОЙ АССОРТИМЕНТ ПРОДУКЦИИ</h3>
+                                    <h2>В НАЛИЧИИ <br> И ПОД ЗАКАЗ</h2>
+                                    <a class="btn btn-white" href="{% url 'products:index' %}">В каталог</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slider-slide-item bg-img" data-bg="{% static 'img/slider/slider-2_1800_935.jpg' %}">
+                <div class="container container-wide h-100">
+                    <div class="row align-items-center h-100">
+                        <div class="col-12">
+                            <div class="slide-content">
+                                <div class="slide-content-inner">
+                                    <h3>ВСЁ ДЛЯ ВАШЕГО АВТОМОБИЛЯ</h3>
+                                    <h2>АВТОЗАПЧАСТИ И <br> АКСЕССУАРЫ</h2>
+                                        <a class="btn btn-white" href="{% url 'products:index' %}">В каталог</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--== End Slider Area Wrapper ==-->
 
-	<!-- Characteristics -->
+    <!--== Start Banner Area Wrapper ==-->
+    <!--== End Banner Area Wrapper ==-->
 
-	<div class="characteristics">
-		<div class="container">
-			<div class="row">
+    <!--== Start Call to Action Area ==-->
+    <div class="call-to-action-area sm-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-lg-4">
+                    <div class="call-to-action-item mt-0">
+                        <div class="call-to-action-item__icon">
+                            <img src="{% static 'img/char_1.png' %}" alt="fast delivery">
+                        </div>
+                        <div class="call-to-action-item__info">
+                            <h3>Бесплатная доставка</h3>
+                            <p>По г. Волгоград при
+                                заказе от 1000 руб.</p>
+                        </div>
+                    </div>
+                </div>
 
-				<!-- Char. Item -->
-				<div class="col-lg-3 col-md-6 char_col">
+                <div class="col-md-4 col-lg-4">
+                    <div class="call-to-action-item">
+                        <div class="call-to-action-item__icon">
+                            <img src="{% static 'img/char_3.png' %}" alt="quality">
+                        </div>
+                        <div class="call-to-action-item__info">
+                            <h3>Экономия</h3>
+                            <p>Низкие цены</p>
+                        </div>
+                    </div>
+                </div>
 
-					<div class="char_item d-flex flex-row align-items-center justify-content-start">
-						<div class="char_icon"><img src="{% static 'images/char_1.png' %}" alt=""></div>
-						<div class="char_content">
-							<div class="char_title">Бесплатная доставка</div>
-							<div class="char_subtitle">от 1000р</div>
-						</div>
-					</div>
-				</div>
+                <div class="col-md-4 col-lg-4">
+                    <div class="call-to-action-item">
+                        <div class="call-to-action-item__icon">
+                            <img src="{% static 'img/char_4.png' %}" alt="return">
+                        </div>
+                        <div class="call-to-action-item__info">
+                            <h3>Стабильные поставки</h3>
+                            <p>Товар в наличии</p>
+                        </div>
+                    </div>
+                </div>
 
-				<!-- Char. Item -->
-				<div class="col-lg-3 col-md-6 char_col">
+            </div>
+        </div>
+    </div>
+    <!--== End Call to Action Area ==-->
 
-					<div class="char_item d-flex flex-row align-items-center justify-content-start">
-						<div class="char_icon"><img src="{% static 'images/char_2.png' %}" alt=""></div>
-						<div class="char_content">
-							<div class="char_title">Обмен товара</div>
-							<div class="char_subtitle">уточните у менеджера</div>
-						</div>
-					</div>
-				</div>
+    <!--== Start Best Seller Products Area ==-->
 
-				<!-- Char. Item -->
-				<div class="col-lg-3 col-md-6 char_col">
+    <!--== End Best Seller Products Area ==-->
 
-					<div class="char_item d-flex flex-row align-items-center justify-content-start">
-						<div class="char_icon"><img src="{% static 'images/char_3.png' %}" alt=""></div>
-						<div class="char_content">
-							<div class="char_title">Экономия</div>
-							<div class="char_subtitle">низкие цены</div>
-						</div>
-					</div>
-				</div>
+    <!--== Start Call to action Wrapper ==-->
+    <div class="call-to-action-area">
+        <div class="call-to-action-content-area bg-img" data-bg="{% static 'img/bg/bg-1.jpg' %}">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <div class="call-to-action-txt">
+                            <h2>ВСЁ ЧТО ВАМ НУЖНО <br> НАЙДЕТЕ ЗДЕСЬ</h2>
+                                <a href="{% url 'products:index' %}" class="btn btn-brand">В каталог</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-				<!-- Char. Item -->
-				<div class="col-lg-3 col-md-6 char_col">
+        <div class="call-to-action-image-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <img src="{% static 'img/bg/bg-car_1899_1081.png' %}" alt="Car" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--== End Call to action Wrapper ==-->
 
-					<div class="char_item d-flex flex-row align-items-center justify-content-start">
-						<div class="char_icon"><img src="{% static 'images/char_4.png' %}" alt=""></div>
-						<div class="char_content">
-							<div class="char_title">Стабильные поставки</div>
-							<div class="char_subtitle">товар в наличии</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <!--== Start Promotion Code Banner Area ==-->
+    <div class="promotion-code-area-wrapper sm-top">
+        <div class="container container-wide">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="promotion-code-banner-item mb-sm-30">
+                        <img src="{% static 'img/banner/banner-5_1416_864.jpg' %}" alt="Banner" />
+                    </div>
+                </div>
 
-	<!-- Deals of the week -->
+                <div class="col-md-6">
+                    <div class="promotion-code-banner-item">
+                        <img src="{% static 'img/banner/banner-6_2121_1414.jpg' %}" alt="Banner" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--== End Promotion Code Banner Area ==-->
 
+    <!--== Start Products Area Wrapper ==-->
+    <div class="products-area-wrapper sm-top">
+        <div class="container container-wide">
+            <div class="row">
+                <div class="col-lg-5 m-auto text-center">
+                    <div class="section-title">
+                        <h2 class="h3">Свежие поступления</h2>
+                        <p>Товар уже в наличии</p>
+                    </div>
+                </div>
+            </div>
 
-	<!-- Popular Categories -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="product-wrapper columns-5">
+                        <!-- Start Product Item -->
+                        {% for product in news %}
+                            <div class="col">
+                                <div class="product-item">
+                                    <div class="product-item__thumb">
+                                        <a href="{% url 'products:product' product.id %}">
+                                            <img class="thumb-primary" src="/media/{{ product.image_main }}" alt="Product" />
+                                            <img class="thumb-secondary" src="/media/{{ product.image_main }}" alt="Product" />
+                                        </a>
+                                    </div>
 
-	<div class="popular_categories">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-3">
-					<div class="popular_categories_content">
-						<div class="popular_categories_title">Популярные категории</div>
-						<div class="popular_categories_slider_nav">
-							<div class="popular_categories_prev popular_categories_nav"><i class="fas fa-angle-left ml-auto"></i></div>
-							<div class="popular_categories_next popular_categories_nav"><i class="fas fa-angle-right ml-auto"></i></div>
-						</div>
-						<div class="popular_categories_link"><a href="{% url 'products:index' %}">каталог</a></div>
-					</div>
-				</div>
+                                    <div class="product-item__content">
+                                        <br>
+                                        <h4 class="title"><a href="{% url 'products:product' product.id %}">{{ product.name }}</a></h4>
+                                        <span class="price"><strong>Цена:</strong> {{ product.price }} руб.</span>
+                                    </div>
 
-				<!-- Popular Categories Slider -->
+                                    <div class="product-item__action">
+                                        <button class="btn-add-to-cart"><a href="{% url 'products:basket_add' product.id %}"><i class="ion-bag"></i></a></button>
+                                        <button class="btn-add-to-cart"><a href="{% url 'products:product' product.id %}"><i class="ion-eye"></i></a></button>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <!-- End Product Item -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--== End Products Area Wrapper ==-->
 
-				<div class="col-lg-9">
-					<div class="popular_categories_slider_container">
-						<div class="owl-carousel owl-theme popular_categories_slider">
+    <!--== Start Flash Deals Area ==-->
+    <div class="flash-deals-area bg-img" data-bg="{% static 'img/bg/deal-bg.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-11 m-auto">
+                    <div class="row align-items-center">
+                        <div class="col-md-5 col-lg-6">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--== End Flash Deals Area ==-->
 
-							{% for category in categories %}
-								<div class="owl-item">
-									<div class="popular_category d-flex flex-column align-items-center justify-content-center">
-										<div class="popular_category_image"><img src="/media/{{ category.image }}" alt=""></div>
-										<div class="popular_category_text">{{ category.name }}</div>
-									</div>
-								</div>
-							{% endfor %}
+    <!--== Start Newsletter Area ==-->
+    <div class="newsletter-area-wrapper">
+        <div class="container container-wide">
+            <div class="newsletter-area-inner bg-img" data-bg="{% static 'img/bg/newsletter-bg_1400_900.jpg' %}">
+                <div class="row">
+                    <div class="col-lg-8 col-xl-5 m-auto">
+                        <div class="newsletter-content text-center">
+                            <h4> <span>Не нашли что-то?</span> </h4>
+                            <h2>мы с Вами свяжемся и ответим на все вопросы</h2>
+                            <p> </p>
 
+                                <div class="newsletter-form-wrap">
+                                    {% if request.user.is_authenticated %}
+                                        <form action="{% url 'products:question' %}" method="get">
+                                            <div class="form-content">
+                                                <input name="search_string" type="text" placeholder="Уточните Ваш запрос при необходимости" />
+                                                <button class="btn-newsletter">Запросить</button>
+                                            </div>
+                                        </form>
+                                    {% else %}
+                                        <form action="{% url 'users:login' %}" method="get">
+                                            <div class="form-content">
+                                                <input name="search_string" type="text" placeholder="Уточните Ваш запрос при необходимости" />
+                                                <button class="btn-newsletter">Запросить</button>
+                                            </div>
+                                        </form>
+                                    {% endif %}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--== End Newsletter Area ==-->
 
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <!--== Start Brand Logo Area Wrapper ==-->
+    <!--== End Brand Logo Area Wrapper ==-->
 
-	<!-- Banner -->
-
-
-	<!-- Hot New Arrivals -->
-
-	<div class="new_arrivals">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="tabbed_container">
-						<div class="tabs clearfix tabs-right">
-							<div class="new_arrivals_title">Свежие поступления</div>
-							<ul class="clearfix">
-								<li class="active">Уже поступило</li>
-							</ul>
-							<div class="tabs_line"><span></span></div>
-						</div>
-						<div class="row">
-							<div class="col-lg-9" style="z-index:1;">
-
-								<!-- Product Panel Arrivals -->
-								<div class="product_panel panel active">
-									<div class="arrivals_slider slider">
-										{% for product in news %}
-												<div class="arrivals_slider_item">
-													<div class="border_active"></div>
-													<div class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-														<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="/media/{{ product.image_main }}" alt=""></div>
-														<div class="product_content">
-															<div class="product_price">{{ product.price }}</div>
-															<div class="product_name"><div><a href="{% url 'products:product' product.id %}">{{ product.name }}</a></div></div>
-															<div class="product_extras">
-																<a href="{% url 'products:basket_add' product.id %}">
-																	<button class="product_cart_button">Добавить в корзину</button>
-																</a>
-															</div>
-														</div>
-													</div>
-												</div>
-										{% endfor %}
-									</div>
-									<div class="arrivals_slider_dots_cover"></div>
-								</div>
-
-								<!-- Product Panel Awaiting -->
-								<div class="product_panel panel">
-									<div class="arrivals_slider slider">
-										{% for product in news %}
-												<div class="arrivals_slider_item">
-													<div class="border_active"></div>
-													<div class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-														<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="/media/{{ product.image_main }}" alt=""></div>
-														<div class="product_content">
-															<div class="product_price">{{ product.price }}</div>
-															<div class="product_name"><div><a href="product.html">{{ product.name }}</a></div></div>
-															<div class="product_extras">
-																<div class="product_color">
-																	<input type="radio" checked name="product_color" style="background:#b19c83">
-																	<input type="radio" name="product_color" style="background:#000000">
-																	<input type="radio" name="product_color" style="background:#999999">
-																</div>
-																<button class="product_cart_button">Добавить в корзину</button>
-															</div>
-														</div>
-														<div class="product_fav"><i class="fas fa-heart"></i></div>
-														<ul class="product_marks">
-															<li class="product_mark product_discount">-25%</li>
-															<li class="product_mark product_new">new</li>
-														</ul>
-													</div>
-												</div>
-										{% endfor %}
-									</div>
-									<div class="arrivals_slider_dots_cover"></div>
-								</div>
-
-								<!-- Product Panel Popular -->
-								<div class="product_panel panel">
-									<div class="arrivals_slider slider">
-										{% for product in news %}
-												<div class="arrivals_slider_item">
-													<div class="border_active"></div>
-													<div class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-														<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="/media/{{ product.image_main }}" alt=""></div>
-														<div class="product_content">
-															<div class="product_price">{{ product.price }}</div>
-															<div class="product_name"><div><a href="product.html">{{ product.name }}</a></div></div>
-															<div class="product_extras">
-																<div class="product_color">
-																	<input type="radio" checked name="product_color" style="background:#b19c83">
-																	<input type="radio" name="product_color" style="background:#000000">
-																	<input type="radio" name="product_color" style="background:#999999">
-																</div>
-																<button class="product_cart_button">Добавить в корзину</button>
-															</div>
-														</div>
-														<div class="product_fav"><i class="fas fa-heart"></i></div>
-														<ul class="product_marks">
-															<li class="product_mark product_discount">-25%</li>
-															<li class="product_mark product_new">new</li>
-														</ul>
-													</div>
-												</div>
-										{% endfor %}
-									</div>
-									<div class="arrivals_slider_dots_cover"></div>
-								</div>
-
-							</div>
-
-							{% for product in new %}
-								<div class="col-lg-3">
-									<div class="arrivals_single clearfix">
-										<div class="d-flex flex-column align-items-center justify-content-center">
-											<div class="arrivals_single_image"><img src="/media/{{ product.image_main }}" alt=""></div>
-											<div class="arrivals_single_content">
-												<div class="arrivals_single_category"><a href="#">{{ product.category }}</a></div>
-												<div class="arrivals_single_name_container clearfix">
-													<div class="arrivals_single_name"><a href="#">{{ product.name }}</a></div>
-													<div class="arrivals_single_price text-right">{{ product.price }}</div>
-												</div>
-												<form action="{% url 'products:basket_add' product.id %}"><button class="arrivals_single_button">Добавить в корзину</button></form>
-
-											</div>
-											<ul class="arrivals_single_marks product_marks">
-												<li class="arrivals_single_mark product_mark product_new">new</li>
-											</ul>
-										</div>
-									</div>
-								</div>
-							{% endfor %}
-
-						</div>
-
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- Best Sellers -->
-
-
-	<!-- Adverts -->
-
-
-	<!-- Trends -->
-
-	<!-- Reviews -->
-
-	<!-- Recently Viewed -->
-
-	<!-- Brands -->
-
-	<div class="brands">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="brands_slider_container">
-
-						<!-- Brands Slider -->
-
-						<div class="owl-carousel owl-theme brands_slider">
-							{% for brand in brands %}
-								<div class="owl-item"><div class="brands_item d-flex flex-column justify-content-center"><img src="/media/{{ brand.image }}" alt=""></div></div>
-							{% endfor %}
-						</div>
-
-						<!-- Brands Slider Navigation -->
-						<div class="brands_nav brands_prev"><i class="fas fa-chevron-left"></i></div>
-						<div class="brands_nav brands_next"><i class="fas fa-chevron-right"></i></div>
-
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-{% endblock %}
-
-{% block js %}
-	<script src="{% static 'plugins/slick-1.8.0/slick.js' %}"></script>
-	<script src="{% static 'plugins/easing/easing.js' %}"></script>
-	<script src="{% static 'js/custom.js' %}"></script>
 {% endblock %}

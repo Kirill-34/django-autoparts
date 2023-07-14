@@ -1,43 +1,65 @@
 {% extends 'products/base.html' %}
 {% load static %}
 
-{% block css %}
-	<link rel="stylesheet" type="text/css" href="{% static 'styles/regular_styles.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'styles/regular_responsive.css' %}">
-{% endblock %}
-
 {% block content %}
 
-	<!-- Single Blog Post -->
+    <!--== Start Page Header Area ==-->
+    <div class="page-header-wrap bg-img" data-bg="{% static 'img/1616690104_38-p-avtozapchasti-fon-43.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="page-header-content">
+                        <div class="page-header-content-inner">
+                            <h1>Уточнение статуса заказа</h1>
 
-	<div class="single_post">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-8 offset-lg-2">
-					<div class="single_post_title">Уточнение статуса заказа</div>
-					<div class="single_post_text">
-						<p>Для уточнения статуса заказа нажмите на кнопку ниже и наш менеджер с Вами свяжется</p>
+                            <ul class="breadcrumb">
+                                <li><a href="{% url 'index' %}">Домашняя</a></li>
+                                <li class="current"><a href="#">Уточнить о заказе</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--== End Page Header Area ==-->
 
-						<div class="single_post_quote text-center">
-							<div class="char_icon">
-								{% if request.user.is_authenticated %}
-									<a href="{% url 'products:order_question' %}">Уточнить о заказе</a>
-								{% else %}
-									<a href="{% url 'users:login' %}">Уточнить о заказе</a>
-								{% endif %}
-								<img src="{% static 'images/char_1.png' %}" alt="">
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <!--== Start Page Content Wrapper ==-->
+    <div class="page-content-wrapper sp-y">
+        <div class="blog-details-page-wrapper">
+            <div class="container container-wide">
+                <div class="row">
+                    <div class="col-12">
+                        <article class="blog-post-details">
+
+                            <div class="blog-post-txt-wrap">
+                                <div class="row">
+
+                                    <div class="col-md-9 col-lg-8 m-auto order-0">
+                                        <div class="blog-post-txt">
+                                            <h2>Для уточнения статуса заказа нажмите на кнопку ниже и наш менеджер с Вами свяжется</h2>
+
+                                            {% if request.user.is_authenticated %}
+                                                <div class="col-12 mt-40">
+                                                    <button class="btn btn-brand w-100"><a href="{% url 'products:order_question' %}">Уточнить</a></button>
+                                                </div>
+                                            {% else %}
+                                                <div class="col-12 mt-40">
+                                                    <button class="btn btn-brand w-100"><a href="{% url 'users:login' %}">Уточнить</a></button>
+                                                </div>
+                                            {% endif %}
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--== End Page Content Wrapper ==-->
 
 {% endblock %}
-
-{% block js %}
-	<script src="{% static 'plugins/easing/easing.js' %}"></script>
-	<script src="{% static 'js/regular_custom.js' %}"></script>
-{% endblock %}
-

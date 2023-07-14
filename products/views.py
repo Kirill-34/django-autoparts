@@ -11,6 +11,7 @@ from products.telegramm import send_message
 
 def index(request):
     if request.user.is_anonymous:
+        baskets = None
         total_quantity = 0
         total_sum = 0
     else:
@@ -27,6 +28,7 @@ def index(request):
         'new': Product.objects.all().order_by("-created_date")[:1],
         'total_sum': total_sum,
         'total_quantity': total_quantity,
+        'baskets': baskets,
     }
     return render(request, 'products/index.html', context)
 
@@ -42,6 +44,7 @@ def products(request, category_id=None, brand_id=None, page=1):
         total_items = len(Product.objects.all())
 
     if request.user.is_anonymous:
+        baskets = None
         total_quantity = 0
         total_sum = 0
     else:
@@ -49,16 +52,19 @@ def products(request, category_id=None, brand_id=None, page=1):
         total_quantity = sum(basket.quantity for basket in baskets)
         total_sum = sum(basket.sum() for basket in baskets)
 
-    paginator = Paginator(products, 15)
+    paginator = Paginator(products, 9)
     products_paginator = paginator.page(page)
     context = {
         'title': 'Автосклад - каталог',
         'categories': ProductCategory.objects.all(),
         'products': products_paginator,
         'brands': Brand.objects.all(),
+        'baskets': baskets,
         'total_sum': total_sum,
         'total_quantity': total_quantity,
         'total_items': total_items,
+        'category_id': category_id,
+        'brand_id': brand_id,
     }
 
     return render(request, 'products/products.html', context)
@@ -66,6 +72,7 @@ def products(request, category_id=None, brand_id=None, page=1):
 def product(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     if request.user.is_anonymous:
+        baskets = None
         total_quantity = 0
         total_sum = 0
     else:
@@ -76,6 +83,7 @@ def product(request, product_id):
         'title': 'Автосклад - товар',
         'product': product,
         'categories': ProductCategory.objects.all(),
+        'baskets': baskets,
         'total_sum': total_sum,
         'total_quantity': total_quantity,
         'brands': Brand.objects.all(),
@@ -123,13 +131,19 @@ def search_res(request):
     query = request.GET.get('search_string')
     products = Product.objects.filter(name__iregex=query) | Product.objects.filter(description__iregex=query) | Product.objects.filter(article__iregex=query)
 
-    baskets = Basket.objects.filter(user=request.user)
-    total_quantity = sum(basket.quantity for basket in baskets)
-    total_sum = sum(basket.sum() for basket in baskets)
+    if request.user.is_anonymous:
+        baskets = None
+        total_quantity = 0
+        total_sum = 0
+    else:
+        baskets = Basket.objects.filter(user=request.user)
+        total_quantity = sum(basket.quantity for basket in baskets)
+        total_sum = sum(basket.sum() for basket in baskets)
 
     context = {
         'title': 'Автосклад - каталог',
         'categories': ProductCategory.objects.all(),
+        'baskets': baskets,
         'products': products,
         'brands': Brand.objects.all(),
         'total_sum': total_sum,
@@ -147,6 +161,7 @@ def question(request):
     send_message('Запрос от ' + str(request.user.first_name) + ' ' + str(request.user.phone_number) + ': ' + text)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+@login_required
 def order_question(request):
     send_message('Запрос о статусе заказа от ' + str(request.user.first_name) + ' ' + str(request.user.phone_number))
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
@@ -169,16 +184,17 @@ def order_add(request):
         res += 'артикул ' + str(basket.product.article) + ' '
         res += str(basket.quantity) + 'шт '
         res += str(basket.product.price) + 'руб '
-        res += 'на сумму ' + total_sum
+        res += 'на сумму ' + str(basket.sum()) + ';\n'
     for basket in baskets:
         basket.delete()
 
-    text = ('Заказ от ' + str(request.user.first_name) + ' ' + str(request.user.phone_number) + ':\n' + res)
+    text = ('Заказ от ' + str(request.user.first_name) + ' ' + str(request.user.phone_number) + ':\n' + res + '\n' + 'Итого на ' + str(total_sum))
     send_message(text)
-    return render(request, 'products/products.html')
+    return render(request, 'products/index.html')
 
 def return_good(request):
     if request.user.is_anonymous:
+        baskets = None
         total_quantity = 0
         total_sum = 0
     else:
@@ -188,6 +204,7 @@ def return_good(request):
     context = {
         'title': 'Автосклад - возврат и обмен',
         'categories': ProductCategory.objects.all(),
+        'baskets': baskets,
         'total_sum': total_sum,
         'total_quantity': total_quantity,
     }
@@ -195,6 +212,7 @@ def return_good(request):
 
 def about_order(request):
     if request.user.is_anonymous:
+        baskets = None
         total_quantity = 0
         total_sum = 0
     else:
@@ -204,6 +222,7 @@ def about_order(request):
     context = {
         'title': 'Автосклад - статус заказа',
         'categories': ProductCategory.objects.all(),
+        'baskets': baskets,
         'total_sum': total_sum,
         'total_quantity': total_quantity,
     }
@@ -211,6 +230,7 @@ def about_order(request):
 
 def faq(request):
     if request.user.is_anonymous:
+        baskets = None
         total_quantity = 0
         total_sum = 0
     else:
@@ -220,6 +240,7 @@ def faq(request):
     context = {
         'title': 'Автосклад - частые вопросы',
         'categories': ProductCategory.objects.all(),
+        'baskets': baskets,
         'total_sum': total_sum,
         'total_quantity': total_quantity,
     }
@@ -227,6 +248,7 @@ def faq(request):
 
 def contact(request):
     if request.user.is_anonymous:
+        baskets = None
         total_quantity = 0
         total_sum = 0
     else:
@@ -238,6 +260,7 @@ def contact(request):
         'categories': ProductCategory.objects.all(),
         'products': Product.objects.all(),
         'brands': Brand.objects.all(),
+        'baskets': baskets,
         'total_sum': total_sum,
         'total_quantity': total_quantity,
     }

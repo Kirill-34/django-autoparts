@@ -1,357 +1,280 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html class="no-js" lang="zxx">
+
 <head>
-<title>{{ title|title }}</title>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="description" content="Auto shop project">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap4/bootstrap.min.css' %}">
-<link href="{% static 'plugins/fontawesome-free-5.0.1/css/fontawesome-all.css' %}" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/owl.theme.default.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/animate.css' %}">
-{% block css %} {% endblock %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{{ title | title}}</title>
+
+    <!--== Favicon ==-->
+    <link rel="shortcut icon" href="{% static 'img/1c01759e11ed37c1b5b81d2122090be0.jpg' %}" type="image/x-icon" />
+
+    <!--== Google Fonts ==-->
+    <link href="https://fonts.googleapis.com/css?family=Oswald:400,500,600,700%7CPoppins:400,400i,500,600&display=swap" rel="stylesheet">
+
+    <!-- build:css assets/css/app.min.css -->
+    <!--== Leaflet Min CSS ==-->
+    <link href="{% static 'css/leaflet.min.css' %}" rel="stylesheet" />
+    <!--== Nice Select Min CSS ==-->
+    <link href="{% static 'css/nice-select.min.css' %}" rel="stylesheet" />
+    <!--== Slick Slider Min CSS ==-->
+    <link href="{% static 'css/slick.min.css' %}" rel="stylesheet" />
+    <!--== Magnific Popup Min CSS ==-->
+    <link href="{% static 'css/magnific-popup.min.css' %}" rel="stylesheet" />
+    <!--== Slicknav Min CSS ==-->
+    <link href="{% static 'css/slicknav.min.css' %}" rel="stylesheet" />
+    <!--== Animate Min CSS ==-->
+    <link href="{% static 'css/animate.min.css' %}" rel="stylesheet" />
+    <!--== Ionicons Min CSS ==-->
+    <link href="{% static 'css/ionicons.min.css' %}" rel="stylesheet" />
+    <!--== Font-Awesome Min CSS ==-->
+    <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" />
+    <!--== Bootstrap Min CSS ==-->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
+
+    <!--== Main Style CSS ==-->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+    <!--== Helper Min CSS ==-->
+    <link href="{% static 'css/helper.min.css' %}" rel="stylesheet" />
+    <!-- endbuild -->
+
+    <!--[if lt IE 9]>
+<script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
 
 </head>
 
 <body>
 
-<div class="super_container">
+    <!--== Start Header Area ==-->
+    <header class="header-area">
+        <div class="container container-wide">
+            <div class="row align-items-center">
+                <div class="col-sm-4 col-lg-2">
+                    <div class="site-logo text-center text-sm-left">
+                        <a href="index.html"><img src="{% static 'img/1c01759e11ed37c1b5b81d2122090be0.jpg' %}" alt="Logo" /></a>
+                    </div>
+                </div>
 
-	<!-- Header -->
+                <div class="col-lg-7 d-none d-lg-block">
+                    <div class="site-navigation">
+                        <ul class="main-menu nav">
+                            <li><a href="{% url 'index' %}">Домашняя</a></li>
+                            <li><a href="{% url 'products:index' %}">Каталог</a></li>
+                            <li class="has-submenu"><a href="#">Покупателям</a>
+                                <ul class="sub-menu">
+                                    <li><a href="{% url 'products:about_order' %}">Уточнение о статусе заказа</a></li>
+                                    <li><a href="{% url 'products:return' %}">Возврат и обмен</a></li>
+                                    <li><a href="{% url 'products:faq' %}">Частые вопросы</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="{% url 'products:contact' %}">Контакты</a></li>
+                        </ul>
+                    </div>
+                </div>
 
-	<header class="header">
+                <div class="col-sm-8 col-lg-3">
+                    <div class="site-action d-flex justify-content-center justify-content-sm-end align-items-center">
+                        {% if request.user.is_authenticated %}
+                            <ul class="login-reg-nav nav">
+                                <li><a href="{% url 'users:profile' %}">{{ request.user.first_name }}</a></li>
+                                <li><a href="{% url 'users:logout' %}">Выйти</a></li>
+                            </ul>
+						{% else %}
+                            <ul class="login-reg-nav nav">
+                                <li><a href="{% url 'users:login' %}">Войти</a></li>
+                                <li><a href="{% url 'users:register' %}">Регистрация</a></li>
+                            </ul>
+						{% endif %}
 
-		<!-- Top Bar -->
+                        <div class="mini-cart-wrap">
+                            {% if request.user.is_authenticated %}
+                                <a href="{% url 'users:profile' %}" class="btn-mini-cart">
+                                    <i class="ion-bag"></i>
+                                    <span class="cart-total">{{ total_quantity }}</span>
+                                </a>
+                                <div class="mini-cart-content">
+                                    <div class="mini-cart-product">
+                                        {% for basket in baskets %}
+                                            <div class="mini-product">
+                                                <div class="mini-product__thumb">
+                                                    <a href="{% url 'users:profile' %}" class="btn-mini-cart">
+                                                        <i class="ion-bag"></i>
+                                                    </a>
+                                                </div>
+                                                <div class="mini-product__info">
+                                                    <h2 class="title"><a href="{% url 'products:product' basket.product.id %}">{{ basket.product.name }}</a></h2>
 
-		<div class="top_bar">
-			<div class="container">
-				<div class="row">
-					<div class="col d-flex flex-row">
-						<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{% static 'images/phone.png' %}" alt=""></div>+7 904 403 6359</div>
-						<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{% static 'images/mail.png' %}" alt=""></div>89044036359@yandex.ru</div>
-						<div class="top_bar_content ml-auto">
-							<div class="top_bar_menu">
-								<ul class="standard_dropdown top_bar_dropdown">
-									<li>
-										<a>Русский<i class="fas fa-chevron-down"></i></a>
-									</li>
-									<li>
-										<a>Рубль РФ<i class="fas fa-chevron-down"></i></a>
-									</li>
-								</ul>
-							</div>
-							<div class="top_bar_user">
-								{% if request.user.is_authenticated %}
-									<div class="user_icon"><img src="{% static 'images/user.svg' %}" alt=""></div>
-									<div><a href="{% url 'users:profile' %}">{{ request.user.first_name }}</a></div>
-									<div><a href="{% url 'users:logout' %}">Выйти</a></div>
-								{% else %}
-									<div class="user_icon"><img src="{% static 'images/user.svg' %}" alt=""></div>
-									<div><a href="{% url 'users:register' %}">Зарегистрироваться</a></div>
-									<div><a href="{% url 'users:login' %}">Войти</a></div>
-								{% endif %}
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+                                                    <div class="mini-calculation">
+                                                        <p class="price">{{ basket.quantity }} x <span>{{ basket.product.price }} руб.</span></p>
+                                                        <button class="remove-pro"><a href="{% url 'products:basket_delete' basket.id %}"><i class="ion-trash-b"></i></a></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% else %}
+                                <a href="{% url 'users:login' %}" class="btn-mini-cart">
+                                    <i class="ion-bag"></i>
+                                    <span class="cart-total">0</span>
+                                </a>
+                            {% endif %}
+                        </div>
 
-		<!-- Header Main -->
+                        <div class="responsive-menu d-lg-none">
+                            <button class="btn-menu">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!--== End Header Area ==-->
 
-		<div class="header_main">
-			<div class="container">
-				<div class="row">
+    {% block content %} {% endblock %}
 
-					<!-- Logo -->
-					<div class="col-lg-2 col-sm-3 col-3 order-1">
-						<div class="logo_container">
-							<div class="logo"><a href="{% url 'index' %}">Автосклад</a></div>
-						</div>
-					</div>
+<!--== Start Footer Area Wrapper ==-->
+    <footer class="footer-area">
+        <div class="footer-widget-area">
+            <div class="container container-wide">
+                <div class="row mtn-40">
+                    <div class="col-lg-3">
+                        <div class="widget-item">
+                            <div class="about-widget">
+                                <a href="index.html"><img src="{% static 'img/1c01759e11ed37c1b5b81d2122090be0-squads.png' %}" alt="Logo" /></a>
+                                <p>Благодарим за Ваш выбор магазина Автосклад,
+                                    надеемся на наше дальнейшее сотрудничество.
+                                    Мы делаем всё чтобы быть полезными для Вас!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
 
-					<!-- Search -->
-					<div class="col-lg-6 col-12 order-lg-2 order-3 text-lg-left text-right">
-						<div class="header_search">
-							<div class="header_search_content">
-								<div class="header_search_form_container">
-									<form action="{% url 'products:search_res' %}" method="get" class="header_search_form clearfix">
-										<input name="search_string" type="search" required="required" class="header_search_input" placeholder="Поиск товара...">
-										<div class="custom_dropdown">
-											<div class="custom_dropdown_list">
-												<span class="custom_dropdown_placeholder clc">Все категории</span>
-												<i class="fas fa-chevron-down"></i>
-												<ul class="custom_list clc">
-													<li><a class="clc" href="{% url 'products:index' %}">Все категории</a></li>
-													{% for category in categories %}
-														<li><a class="clc" href="{{ category.id }}">{{ category.name }}</a></li>
-													{% endfor %}
-												</ul>
-											</div>
-										</div>
-										<button type="submit" class="header_search_button trans_300" value="Submit"><img src="{% static 'images/search.png' %}" alt=""></button>
-									</form>
-								</div>
-							</div>
-						</div>
-					</div>
+                    <div class="col-sm-6 col-lg-2">
+                        <div class="widget-item">
+                            <h4 class="widget-title">Быстрый поиск</h4>
+                            <div class="widget-body">
+                                <ul class="widget-list">
+                                    {% for category in categories %}
+                                        <li><a href="{% url 'products:index_cat' category.id %}">{{ category.name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
 
-					<!-- Wishlist -->
-					<div class="col-lg-4 col-9 order-lg-3 order-2 text-lg-left text-right">
-						<div class="wishlist_cart d-flex flex-row align-items-center justify-content-end">
-							<div class="wishlist d-flex flex-row align-items-center justify-content-end">
-							</div>
+                    <div class="col-sm-6 col-lg-2">
+                        <div class="widget-item">
+                            <h4 class="widget-title">Страницы</h4>
+                            <div class="widget-body">
+                                <ul class="widget-list">
+                                    <li><a href="{% url 'index' %}">Домашняя</a></li>
+                                    <li><a href="{% url 'products:index' %}">Каталог</a></li>
+                                    <li><a href="{% url 'products:contact' %}">Контакты</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
 
-							<!-- Cart -->
-							<div class="cart">
-								<div class="cart_container d-flex flex-row align-items-center justify-content-end">
-									<div class="cart_icon">
-										<img src="{% static 'images/cart.png' %}" alt="">
-										{% if request.user.is_authenticated %}
-											<div class="cart_count"><span>{{ total_quantity }}</span></div>
-										{% else %}
-											<div class="cart_count"><span>0</span></div>
-										{% endif %}
-									</div>
-									<div class="cart_content">
-										{% if request.user.is_authenticated %}
-											<div class="cart_text"><a href="{% url 'users:profile' %}">Корзина</a></div>
-											<div class="cart_price">{{ total_sum }}</div>
-										{% else %}
-											<div class="cart_text"><a href="{% url 'users:login' %}">Корзина</a></div>
-											<div class="cart_price">0</div>
-										{% endif %}
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+                    <div class="col-sm-6 col-lg-2">
+                        <div class="widget-item">
+                            <h4 class="widget-title">Поддержка</h4>
+                            <div class="widget-body">
+                                <ul class="widget-list">
+                                    <li><a href="{% url 'users:profile' %}">Мой аккаунт</a></li>
+                                    <li><a href="{% url 'products:about_order' %}">Уточнить о заказе</a></li>
+                                    <li><a href="{% url 'products:return' %}">Возврат, обмен</a></li>
+                                    <li><a href="{% url 'products:faq' %}">Частые вопросы</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
 
-		<!-- Main Navigation -->
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="widget-item">
+                            <h4 class="widget-title">Информация Автосклада</h4>
+                            <div class="widget-body">
+                                <address>
+                                    РФ, Волгоград <br>
+                                https://example.com <br>
+                                (+7) 904 403 6359
+                            </address>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!--== End Footer Area Wrapper ==-->
 
-		<nav class="main_nav">
-			<div class="container">
-				<div class="row">
-					<div class="col">
-
-						<div class="main_nav_content d-flex flex-row">
-
-							<!-- Categories Menu -->
-
-							<div class="cat_menu_container">
-								<div class="cat_menu_title d-flex flex-row align-items-center justify-content-start">
-									<div class="cat_burger"><span></span><span></span><span></span></div>
-									<div class="cat_menu_text">категории</div>
-								</div>
-
-								<ul class="cat_menu">
-									{% for category in categories %}
-										<li><a href="{% url 'products:index_cat' category.id %}">{{ category.name }}<i class="fas fa-chevron-right ml-auto"></i></a></li>
-									{% endfor %}
-								</ul>
-							</div>
-
-							<!-- Main Nav Menu -->
-
-							<div class="main_nav_menu ml-auto">
-								<ul class="standard_dropdown main_nav_dropdown">
-									<li><a href="{% url 'index' %}">Домашняя<i class="fas fa-chevron-down"></i></a></li>
-									<li><a href="{% url 'products:index' %}">Каталог<i class="fas fa-chevron-down"></i></a></li>
-									<li class="hassubs">
-										<a href="#">Покупателям<i class="fas fa-chevron-down"></i></a>
-										<ul>
-											<li><a href="{% url 'products:about_order' %}">Уточнение о статусе заказа<i class="fas fa-chevron-down"></i></a></li>
-											<li><a href="{% url 'products:return' %}">Возврат и обмен<i class="fas fa-chevron-down"></i></a></li>
-											<li><a href="{% url 'products:faq' %}">Частые вопросы<i class="fas fa-chevron-down"></i></a></li>
-										</ul>
-									</li>
-									<li><a href="{% url 'products:contact' %}">Контакты<i class="fas fa-chevron-down"></i></a></li>
-								</ul>
-							</div>
-
-							<!-- Menu Trigger -->
-
-							<div class="menu_trigger_container ml-auto">
-								<div class="menu_trigger d-flex flex-row align-items-center justify-content-end">
-									<div class="menu_burger">
-										<div class="menu_trigger_text">меню</div>
-										<div class="cat_burger menu_burger_inner"><span></span><span></span><span></span></div>
-									</div>
-								</div>
-							</div>
-
-						</div>
-					</div>
-				</div>
-			</div>
-		</nav>
-
-		<!-- Menu -->
-
-		<div class="page_menu">
-			<div class="container">
-				<div class="row">
-					<div class="col">
-
-						<div class="page_menu_content">
-
-							<div class="page_menu_search">
-								<form action="#">
-									<input type="search" required="required" class="page_menu_search_input" placeholder="Поиск товара...">
-								</form>
-							</div>
-							<ul class="page_menu_nav">
-								<li class="page_menu_item has-children">
-									<a href="#">Язык<i class="fa fa-angle-down"></i></a>
-									<ul class="page_menu_selection">
-										<li><a href="#">Русский<i class="fa fa-angle-down"></i></a></li>
-										<li><a href="#">English<i class="fa fa-angle-down"></i></a></li>
-										<li><a href="#">Spanish<i class="fa fa-angle-down"></i></a></li>
-										<li><a href="#">Japanese<i class="fa fa-angle-down"></i></a></li>
-									</ul>
-								</li>
-								<li class="page_menu_item has-children">
-									<a href="#">Валюта<i class="fa fa-angle-down"></i></a>
-									<ul class="page_menu_selection">
-										<li><a href="#">Рубль РФ<i class="fa fa-angle-down"></i></a></li>
-										<li><a href="#">US Dollar<i class="fa fa-angle-down"></i></a></li>
-										<li><a href="#">EUR Euro<i class="fa fa-angle-down"></i></a></li>
-										<li><a href="#">JPY Japanese Yen<i class="fa fa-angle-down"></i></a></li>
-									</ul>
-								</li>
-								<li class="page_menu_item"><a href="#">Домашняя<i class="fa fa-angle-down"></i></a></li>
-								<li class="page_menu_item"><a href="blog.html">Новости<i class="fa fa-angle-down"></i></a></li>
-								<li class="page_menu_item"><a href="contact.html">Контакты<i class="fa fa-angle-down"></i></a></li>
-							</ul>
-
-							<div class="menu_contact">
-								<div class="menu_contact_item"><div class="menu_contact_icon"><img src="{% static 'images/phone_white.png' %}" alt=""></div>+7 904 403 6359</div>
-								<div class="menu_contact_item"><div class="menu_contact_icon"><img src="{% static 'images/mail_white.png' %}" alt=""></div><a href="mailto:89044036359@yandex.ru">89044036359@yandex.ru</a></div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-	</header>
-
-	{% block content %} {% endblock %}
+    <!-- Scroll Top Button -->
+    <button class="btn-scroll-top"><i class="ion-chevron-up"></i></button>
 
 
 
-	<!-- Newsletter -->
+    <!--== Start Responsive Menu Wrapper ==-->
+    <aside class="off-canvas-wrapper off-canvas-menu">
+        <div class="off-canvas-overlay"></div>
+        <div class="off-canvas-inner">
+            <!-- Start Off Canvas Content -->
+            <div class="off-canvas-content">
+                <div class="off-canvas-header">
+                    <div class="logo">
+                        <a href="{% url 'index' %}"><img src="{% static 'img/1c01759e11ed37c1b5b81d2122090be0-squads.png' %}" alt="Logo"></a>
+                    </div>
+                    <div class="close-btn">
+                        <button class="btn-close"><i class="ion-android-close"></i></button>
+                    </div>
+                </div>
 
-	<div class="newsletter">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="newsletter_container d-flex flex-lg-row flex-column align-items-lg-center align-items-center justify-content-lg-start justify-content-center">
-						<div class="newsletter_title_container">
-							<div class="newsletter_icon"><img src="{% static 'images/send.png' %}" alt=""></div>
-							<div class="newsletter_title">Не нашли что-то?</div>
-							<div class="newsletter_text"><p>мы с Вами свяжемся и ответим на все вопросы</p></div>
-						</div>
-						<div class="newsletter_content clearfix">
-							{% if request.user.is_authenticated %}
-								<form action="{% url 'products:question' %}" method="get" class="newsletter_form">
-									<input name="search_string" type="text" class="newsletter_input" placeholder="Уточните Ваш запрос при необходимости">
-									<button class="newsletter_button">Запросить</button>
-								</form>
-							{% else %}
-								<form action="{% url 'users:login' %}" method="get" class="newsletter_form">
-									<input name="search_string" type="text" class="newsletter_input" placeholder="Уточните Ваш запрос при необходимости">
-									<button class="newsletter_button">Запросить</button>
-								</form>
-							{% endif %}
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                <!-- Content Auto Generate Form Main Menu Here -->
+                <div class="res-mobile-menu mobile-menu">
 
-	<!-- Footer -->
-
-	<footer class="footer">
-		<div class="container">
-			<div class="row">
-
-				<div class="col-lg-3 footer_col">
-					<div class="footer_column footer_contact">
-						<div class="logo_container">
-							<div class="logo"><a href="{% url 'index' %}">Autoparts</a></div>
-						</div>
-						<div class="footer_title">Остались вопросы? Звоните 24/7</div>
-						<div class="footer_phone">+7 904 403 6359</div>
-						<div class="footer_contact_text">
-							<p>РФ, Волгоград</p>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-lg-2 offset-lg-2">
-					<div class="footer_column">
-						<div class="footer_title">Быстрый поиск</div>
-						<ul class="footer_list">
-							{% for category in categories %}
-								<li><a href="{% url 'products:index_cat' category.id %}">{{ category.name }}</a></li>
-							{% endfor %}
-						</ul>
-					</div>
-				</div>
-
-				<div class="col-lg-2">
-					<div class="footer_column">
-						<ul class="footer_list footer_list_2">
-							<li><a href="{% url 'products:index' %}">Каталог</a></li>
-						</ul>
-					</div>
-				</div>
-
-				<div class="col-lg-2">
-					<div class="footer_column">
-						<div class="footer_title">Для покупателей</div>
-						<ul class="footer_list">
-							{% if request.user.is_authenticated %}
-								<li><a href="{% url 'users:profile' %}">Мой аккаунт</a></li>
-								<li><a href="{% url 'products:order_question' %}">Уточнить о заказе</a></li>
-							{% else %}
-								<li><a href="{% url 'users:login' %}">Мой аккаунт</a></li>
-								<li><a href="{% url 'users:login' %}">Уточнить о заказе</a></li>
-							{% endif %}
-							<li><a href="{% url 'products:return' %}">Возврат, обмен</a></li>
-							<li><a href="{% url 'products:faq' %}">Частые вопросы</a></li>
-						</ul>
-					</div>
-				</div>
-
-			</div>
-		</div>
-	</footer>
+                </div>
+            </div>
+        </div>
+    </aside>
+    <!--== End Responsive Menu Wrapper ==-->
 
 
+    <!--=======================Javascript============================-->
+    <!-- build:js assets/js/app.min.js -->
+    <!--=== Modernizr Min Js ===-->
+    <script src="{% static 'js/modernizr-3.6.0.min.js' %}"></script>
+    <!--=== jQuery Min Js ===-->
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <!--=== jQuery Migration Min Js ===-->
+    <script src="{% static 'js/jquery-migrate-1.2.1.min.js' %}"></script>
+    <!--=== Popper Min Js ===-->
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <!--=== Bootstrap Min Js ===-->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <!--=== Slicknav Min Js ===-->
+    <script src="{% static 'js/jquery.slicknav.min.js' %}"></script>
+    <!--=== Magnific Popup Min Js ===-->
+    <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+    <!--=== Slick Slider Min Js ===-->
+    <script src="{% static 'js/slick.min.js' %}"></script>
+    <!--=== Nice Select Min Js ===-->
+    <script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
+    <!--=== Leaflet Min Js ===-->
+    <script src="{% static 'js/leaflet.min.js' %}"></script>
+    <!--=== Countdown Js ===-->
+    <script src="{% static 'js/countdown.js' %}"></script>
 
+    <!--=== Active Js ===-->
+    <script src="{% static 'js/active.js' %}"></script>
+    <!-- endbuild -->
 
-</div>
-
-<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
-<script src="{% static 'styles/bootstrap4/popper.js' %}"></script>
-<script src="{% static 'styles/bootstrap4/bootstrap.min.js' %}"></script>
-<script src="{% static 'plugins/greensock/TweenMax.min.js' %}"></script>
-<script src="{% static 'plugins/greensock/TimelineMax.min.js' %}"></script>
-<script src="{% static 'plugins/scrollmagic/ScrollMagic.min.js' %}"></script>
-<script src="{% static 'plugins/greensock/animation.gsap.min.js' %}"></script>
-<script src="{% static 'plugins/greensock/ScrollToPlugin.min.js' %}"></script>
-<script src="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.js' %}"></script>
-{% block js %} {% endblock %}
 </body>
 
 </html>

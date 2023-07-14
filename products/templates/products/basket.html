@@ -10,13 +10,14 @@
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item d-flex justify-content-between lh-condensed bg-light">
+
                             <span class="text-muted">{{ basket.quantity }} шт.</span>
                                 <div class="quantity_buttons">
                                     <a href="{% url 'products:basket_item_inc' basket.product.id %}">
-                                        <div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fas fa-chevron-up"></i></div>
+                                        <div id="quantity_inc_button" class="quantity_inc quantity_control"><i>&#9650;</i></div>
                                     </a>
                                     <a href="{% url 'products:basket_item_dec' basket.product.id %}">
-                                        <div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fas fa-chevron-down"></i></div>
+                                        <div id="quantity_dec_button" class="quantity_dec quantity_control"><i>&#9660;</i></div>
                                     </a>
                                 </div>
                             <span class="text-muted">{{ basket.sum }} руб.</span>
